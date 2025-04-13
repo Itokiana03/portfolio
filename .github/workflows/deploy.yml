@@ -21,11 +21,13 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          PUBLIC_URL: https://itokiana03.github.io/portfolio
-
+        # Pas besoin de PUBLIC_URL, Vite utilise base dans vite.config.js
+        
+      - name: Create 404.html
+        run: cp dist/index.html dist/404.html
+        
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build  # React utilise "build" et non "dist"
+          folder: dist
           branch: gh-pages
