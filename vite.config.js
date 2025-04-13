@@ -6,6 +6,7 @@ import tailwindcssPlugin from '@tailwindcss/postcss'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/portfolio/', // Base URL pour GitHub Pages
   css: {
     postcss: {
       plugins: [tailwindcssPlugin, autoprefixer],
