@@ -57,6 +57,7 @@ const MainPage = ({ darkMode }) => {
     {
       category: 'Langages de programmation',
       icon: <FaCode className="w-6 h-6" />,
+      color: 'bg-blue-400',
       skills: [
         { name: 'JavaScript', level: 70, icon: <FaJs /> },
         { name: 'TypeScript', level: 60, icon: <SiTypescript /> },
@@ -68,6 +69,7 @@ const MainPage = ({ darkMode }) => {
     {
       category: 'Technologies Front-end',
       icon: <FaReact className="w-6 h-6" />,
+      color: 'bg-green-400',
       skills: [
         { name: 'React.js', level: 70, icon: <FaReact /> },
         { name: 'Vue.js', level: 80, icon: <FaVuejs /> },
@@ -77,6 +79,7 @@ const MainPage = ({ darkMode }) => {
     {
       category: 'Technologies Back-end',
       icon: <FaServer className="w-6 h-6" />,
+      color: 'bg-purple-400', // Ajouté
       skills: [
         { name: 'Node.js', level: 70, icon: <FaNodeJs /> },
         { name: 'Express.js', level: 70, icon: <SiExpress /> },
@@ -85,6 +88,7 @@ const MainPage = ({ darkMode }) => {
     {
       category: 'Bases de données',
       icon: <FaDatabase className="w-6 h-6" />,
+      color: 'bg-orange-400', // Ajouté
       skills: [
         { name: 'MongoDB', level: 65, icon: <SiMongodb /> },
         { name: 'MySQL', level: 60, icon: <SiMysql /> },
@@ -94,6 +98,7 @@ const MainPage = ({ darkMode }) => {
     {
       category: 'Réseaux & Infrastructure',
       icon: <FaNetworkWired className="w-6 h-6" />,
+      color: 'bg-blue-400', // Ajouté
       skills: [
         { name: 'Administration Réseau', level: 65, icon: <FaServer /> },
         { name: 'Protocoles TCP/IP', level: 50, icon: <FaNetworkWired /> },
@@ -103,6 +108,7 @@ const MainPage = ({ darkMode }) => {
     {
       category: 'Outils & Technologies Réseau',
       icon: <FaTools className="w-6 h-6" />,
+      color: 'bg-green-400', // Ajouté
       skills: [
         { name: 'Wireshark', level: 40, icon: <SiWireshark /> },
         { name: 'Pare-feu & Proxy', level: 30, icon: <FaTools /> },
@@ -146,36 +152,52 @@ const MainPage = ({ darkMode }) => {
       date: "2024 - Présent",
       title: "Master en Informatique",
       location: "École Nationale d'Informatique",
-      description: "Informatique generale",
-      icon: <FaGraduationCap />
+      description: "Informatique générale",
+      icon: <FaGraduationCap />,
+      type: 'education'
     },
     {
       id: 2,
       date: "2019 - 2023",
       title: "Licence en Informatique",
       location: "École Nationale d'Informatique",
-      description: "Informatique generale",
-      icon: <FaGraduationCap />
+      description: "Informatique générale",
+      icon: <FaGraduationCap />,
+      type: 'education'
     },
     {
       id: 3,
       date: "2022",
-      title: "Développeur Backend",
+      title: "Développeur Backend (stagiaire)",
       location: "Groupe IGP",
-      description: "Développement d'applications web avec Angular JS et Nest.js",
-      icon: <FaBriefcase />
+      description: "Stage de Développement d'applications web avec Angular JS et Nest.js",
+      icon: <FaBriefcase />,
+      type: 'internship'
     },
     {
-      id: 3,
+      id: 4,
       date: "2021",
-      title: "Développeur mobile",
+      title: "Développeur mobile (stagiaire)",
       location: "Bucky Burger",
-      description: "Développement d'applications mobile pour le suivi de decaissement des points de ventes",
-      icon: <FaBriefcase />
+      description: "Développement d'applications mobile pour le suivi de décaissement des points de ventes",
+      icon: <FaBriefcase />,
+      type: 'internship'
     },
-    // Ajoutez d'autres expériences ici
+    {
+      id: 5,
+      date: "2019",
+      title: "Bacc",
+      location: "Lycees Jules Ferry Faravohitra",
+      description: "serie : C",
+      icon: <FaGraduationCap />,
+      type: 'education'
+    },
   ];
 
+  // Trier les éléments par date
+  const sortedTimelineItems = timelineItems.sort((a, b) => {
+    return a.date < b.date ? 1 : -1; // Tri décroissant
+  });
 
   // Fonction pour filtrer les catégories de compétences
   const filteredSkillCategories = skillCategories.filter(category => {
@@ -244,7 +266,7 @@ const MainPage = ({ darkMode }) => {
 
             {/* Photo de profil avec effet néon */}
             <div className="relative">
-              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-emerald-600/20 shadow-2xl shadow-black/20 hover:shadow-emerald-600/20 transition-shadow duration-300">
+              <div className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl shadow-black/20 hover:shadow-emerald-600/20 transition-shadow duration-300">
                 <img 
                   src={profileImage}
                   alt="Itokiana Maminiaina" 
@@ -423,7 +445,7 @@ const MainPage = ({ darkMode }) => {
                       </div>
                       <div className="h-2 bg-gray-800/20 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-1000 group-hover:from-emerald-500 group-hover:to-emerald-300"
+                          className={`h-full ${category.color} rounded-full transition-all duration-1000 group-hover:from-emerald-500 group-hover:to-emerald-300`}
                           style={{ 
                             width: `${skill.level}%`,
                             animation: 'slideIn 1s ease-out forwards',
@@ -475,45 +497,88 @@ const MainPage = ({ darkMode }) => {
           </h2>
 
           <div className="relative">
-            {/* Ligne verticale */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-emerald-500 to-emerald-700"></div>
+            {/* Ligne verticale avec animation de gradient */}
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-emerald-400 via-emerald-500 to-emerald-600 rounded-full animate-pulse"></div>
+            
+            {/* Points lumineux animés le long de la ligne (visible uniquement en desktop) */}
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 w-3 h-3 rounded-full bg-emerald-400 shadow-lg shadow-emerald-500/50 animate-bounce"></div>
+            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 bottom-0 w-3 h-3 rounded-full bg-emerald-600 shadow-lg shadow-emerald-500/50 animate-bounce" style={{ animationDelay: '1s' }}></div>
 
-            {/* Items de la timeline */}
-            {timelineItems.map((item, index) => (
-              <div key={item.id} className={`flex items-center justify-${index % 2 === 0 ? 'start' : 'end'} mb-8`}>
-                <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8' : 'pl-8'} ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
-                  <div className={`p-6 rounded-xl backdrop-blur-md transition-all duration-300 hover:transform hover:scale-105 ${
-                    darkMode 
-                      ? 'bg-gray-900/50 border border-gray-800/50' 
-                      : 'bg-white/50 border border-gray-200/50'
-                  }`}>
-                    <div className={`text-sm font-medium ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                      {item.date}
+            {/* Items de la timeline avec des effets améliorés */}
+            {sortedTimelineItems.map((item, index) => (
+              <div 
+                key={item.id} 
+                className="mb-12 md:mb-16"
+                style={{
+                  animation: 'fadeIn 0.8s ease-out forwards',
+                  animationDelay: `${index * 150}ms`,
+                  opacity: 0
+                }}
+              >
+                <div className={`flex flex-col ${item.type === 'education' ? 'md:flex-row' : 'md:flex-row-reverse'} items-center`}>
+                  {/* Contenu */}
+                  <div className={`w-full md:w-1/2 ${item.type === 'education' ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'} mb-6 md:mb-0`}>
+                    <div className={`p-6 rounded-xl backdrop-blur-md border-2 transition-all duration-500 
+                      transform hover:scale-105 hover:shadow-xl
+                      ${darkMode 
+                        ? `bg-gray-900/50 border-emerald-600/30 hover:border-emerald-500 shadow-emerald-600/10
+                           ${index % 2 === 0 ? 'hover:-translate-y-2' : 'hover:translate-y-2'}`
+                        : `bg-white/80 border-emerald-300/50 hover:border-emerald-500 shadow-emerald-300/20
+                           ${index % 2 === 0 ? 'hover:-translate-y-2' : 'hover:translate-y-2'}`
+                      }`}
+                    >
+                      <div className={`text-sm font-semibold mb-2 ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                        {item.date}
+                      </div>
+                      <h3 className={`text-xl font-bold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                        {item.title}
+                      </h3>
+                      <div className={`text-sm mb-3 font-medium ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                        {item.location}
+                      </div>
+                      <p className={`${darkMode ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>
+                        {item.description}
+                      </p>
                     </div>
-                    <h3 className={`text-xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                      {item.title}
-                    </h3>
-                    <div className={`text-sm mb-2 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                      {item.location}
+                  </div>
+                  
+                  {/* Cercle central avec icône */}
+                  <div className="z-10 order-first md:order-none mb-4 md:mb-0">
+                    <div className={`w-16 h-16 rounded-full flex items-center justify-center 
+                      ${darkMode ? 'bg-gray-900' : 'bg-white'} 
+                      border-4 ${item.type === 'education' ? 'border-emerald-500' : 'border-emerald-600'}
+                      shadow-lg ${darkMode ? 'shadow-emerald-500/30' : 'shadow-emerald-500/20'}
+                      transform transition-all duration-500 hover:scale-110 hover:rotate-12`}
+                    >
+                      <span className={`text-2xl ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                        {item.icon}
+                      </span>
                     </div>
-                    <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {item.description}
-                    </p>
+                    {/* Ligne horizontale pour mobile uniquement */}
+                    <div className="md:hidden w-0.5 h-6 bg-emerald-500 mx-auto mt-1"></div>
                   </div>
-                </div>
-                <div className="relative z-10">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                    darkMode ? 'bg-gray-900' : 'bg-white'
-                  } border-4 border-emerald-500`}>
-                    <span className={`text-xl ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                      {item.icon}
-                    </span>
-                  </div>
+                  
+                  {/* Espace pour l'autre côté (pour maintenir l'alignement) */}
+                  <div className="hidden md:block w-1/2"></div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+        
+        {/* Style pour les animations */}
+        <style jsx>{`
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `}</style>
       </section>
 
       {/* Section Soft Skills */}

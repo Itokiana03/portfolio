@@ -1,30 +1,63 @@
-// components/Navbar.jsx
-
-import React, { useState, useEffect } from 'react';
-import { Sun, Moon, Menu, X } from 'lucide-react';
-import { FaSun, FaMoon } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { Sun, Moon, Menu } from 'lucide-react';
 
 const Navbar = ({ darkMode, toggleDarkMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  // Désactiver le défilement quand le menu est ouvert
+  // Gestion des clics à l'extérieur du menu pour le fermer
   useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target) && isMenuOpen) {
+        closeMenu();
+      }
+    }
+
+    // Gestion du défilement
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = 'auto';
     }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  // Fermer le menu quand l'écran devient plus grand (passage au desktop)
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isMenuOpen) {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [isMenuOpen]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    // Désactiver le défilement quand le menu est ouvert
-    document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
-    document.body.style.overflow = 'auto';
+  };
+
+  // Fermer le menu et faire défiler en douceur jusqu'à la section
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    closeMenu();
+    
+    const element = document.querySelector(href);
+    if (element) {
+      // Petit délai pour permettre au menu de se fermer avant de défiler
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
   };
 
   const navItems = [
@@ -42,7 +75,11 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
     }`}>
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center h-16">
-          <a href="#home" className="flex items-center group" onClick={closeMenu}>
+          <a 
+            href="#home" 
+            className="flex items-center group" 
+            onClick={(e) => handleNavClick(e, '#home')}
+          >
             <span className={`text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${
               darkMode
                 ? 'from-emerald-400 via-emerald-500 to-emerald-600'
@@ -64,7 +101,7 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                       ? 'text-gray-300 hover:bg-gray-800/50 hover:text-emerald-400'
                       : 'text-gray-700 hover:bg-gray-100/50 hover:text-emerald-600'
                   }`}
-                  onClick={closeMenu}
+                  onClick={(e) => handleNavClick(e, item.href)}
                 >
                   {item.name}
                 </a>
@@ -110,62 +147,56 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                   : 'hover:bg-gray-100/50 text-gray-700'
               }`}
               aria-label="Toggle Menu"
+              aria-expanded={isMenuOpen}
             >
-              {isMenuOpen ? 
-                <X size={24} className="text-red-400 rotate-90 transition-transform duration-300" /> : 
-                <Menu size={24} className={`${darkMode ? "text-emerald-400" : "text-emerald-600"} transition-transform duration-300`} />
-              }
+              <Menu size={24} className={`${darkMode ? "text-emerald-400" : "text-emerald-600"} transition-transform duration-300`} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Menu Mobile Amélioré */}
-      <div className={`fixed inset-0 z-50 md:hidden transition-all duration-500 ${
-        isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-      }`}>
-        {/* Overlay avec effet de flou */}
+      {/* Menu Mobile Amélioré - Sans transparence, sans X et sans footer */}
+      <div 
+        className={`fixed inset-0 z-50 md:hidden transition-all duration-500 ${
+          isMenuOpen ? 'opacity-100 visible' : 'opacity-100 invisible'
+        }`}
+        aria-hidden={!isMenuOpen}
+      >
+        {/* Overlay opaque */}
         <div 
           className={`absolute inset-0 ${
-            darkMode ? 'bg-black/80' : 'bg-gray-900/80'
-          } backdrop-blur-sm transition-opacity duration-500 ${
-            isMenuOpen ? 'opacity-100' : 'opacity-0'
+            darkMode ? 'bg-black' : 'bg-gray-900'
+          } transition-opacity duration-500 ${
+            isMenuOpen ? 'opacity-90' : 'opacity-0'
           }`}
           onClick={closeMenu}
         />
 
-        {/* Contenu du menu */}
-        <div className={`absolute right-0 top-0 h-full w-64 ${
-          darkMode 
-            ? 'bg-gray-900 border-l border-gray-800/50' 
-            : 'bg-white border-l border-gray-200/50'
-        } transform transition-transform duration-500 ease-in-out ${
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}>
-          {/* En-tête du menu */}
+        {/* Contenu du menu - Sans transparence */}
+        <div 
+          ref={menuRef}
+          className={`absolute right-0 top-0 h-full w-64 ${
+            darkMode 
+              ? 'bg-gray-900 border-l border-gray-800' 
+              : 'bg-white border-l border-gray-200'
+          } transform transition-transform duration-500 ease-in-out shadow-xl ${
+            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          {/* En-tête du menu - Sans bouton X */}
           <div className={`p-6 border-b ${
-            darkMode ? 'border-gray-800/50' : 'border-gray-200/50'
+            darkMode ? 'border-gray-800' : 'border-gray-200'
           }`}>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-center">
               <span className={`text-lg font-bold ${
                 darkMode ? 'text-white' : 'text-gray-900'
               }`}>
                 Menu
               </span>
-              <button
-                onClick={closeMenu}
-                className={`p-2 rounded-lg transition-colors duration-300 ${
-                  darkMode
-                    ? 'hover:bg-gray-800/50 text-gray-400 hover:text-white'
-                    : 'hover:bg-gray-100 text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                <X size={20} />
-              </button>
             </div>
           </div>
 
-          {/* Liste des liens */}
+          {/* Liste des liens avec animation séquentielle */}
           <div className="py-6">
             {navItems.map((item, index) => (
               <a
@@ -173,29 +204,24 @@ const Navbar = ({ darkMode, toggleDarkMode }) => {
                 href={item.href}
                 className={`block px-6 py-3 text-base font-medium transition-all duration-300 ${
                   darkMode
-                    ? 'text-gray-400 hover:bg-gray-800/50 hover:text-emerald-400'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-emerald-600'
-                } transform hover:translate-x-2`}
-                onClick={closeMenu}
+                    ? 'text-gray-300 hover:bg-gray-800 hover:text-emerald-400'
+                    : 'text-gray-700 hover:bg-gray-100 hover:text-emerald-600'
+                } transform hover:translate-x-2 ${
+                  isMenuOpen 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-4'
+                }`}
+                onClick={(e) => handleNavClick(e, item.href)}
                 style={{
-                  transitionDelay: `${index * 100}ms`
+                  transitionDelay: isMenuOpen ? `${index * 75}ms` : '0ms'
                 }}
               >
                 {item.name}
               </a>
             ))}
           </div>
-
-          {/* Footer du menu */}
-          <div className={`absolute bottom-0 left-0 right-0 p-6 border-t ${
-            darkMode ? 'border-gray-800/50' : 'border-gray-200/50'
-          }`}>
-            <div className={`text-sm ${
-              darkMode ? 'text-gray-400' : 'text-gray-600'
-            }`}>
-              © 2025 RAJAOARIMINO Itokiana Maminiana
-            </div>
-          </div>
+          
+          {/* Pas de footer */}
         </div>
       </div>
     </nav>
