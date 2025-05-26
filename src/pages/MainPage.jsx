@@ -19,16 +19,16 @@ import resto6 from '../assets/GestionRestaurant/6.png';
 import resto7 from '../assets/GestionRestaurant/7.png';
 
 // Import des images du projet Recherche Tabou
-import tabou1 from '../assets/rechercheTabou/1.png';
-import tabou2 from '../assets/rechercheTabou/2.png';
-import tabou3 from '../assets/rechercheTabou/3.png';
-import tabou4 from '../assets/rechercheTabou/4.png';
-import tabou5 from '../assets/rechercheTabou/5.png';
-import tabou6 from '../assets/rechercheTabou/6.png';
-import tabou7 from '../assets/rechercheTabou/7.png';
-import tabou8 from '../assets/rechercheTabou/8.png';
-import tabou9 from '../assets/rechercheTabou/9.png';
-import tabou10 from '../assets/rechercheTabou/10.png';
+import tabou1 from '../assets/RechercheTabou/1.png';
+import tabou2 from '../assets/RechercheTabou/2.png';
+import tabou3 from '../assets/RechercheTabou/3.png';
+import tabou4 from '../assets/RechercheTabou/4.png';
+import tabou5 from '../assets/RechercheTabou/5.png';
+import tabou6 from '../assets/RechercheTabou/6.png';
+import tabou7 from '../assets/RechercheTabou/7.png';
+import tabou8 from '../assets/RechercheTabou/8.png';
+import tabou9 from '../assets/RechercheTabou/9.png';
+import tabou10 from '../assets/RechercheTabou/10.png';
 
 const MainPage = ({ darkMode }) => {
   const [activeSkillTab, setActiveSkillTab] = useState('development'); // 'development' ou 'network'
