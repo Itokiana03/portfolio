@@ -314,7 +314,7 @@ const MainPage = ({ darkMode }) => {
                 <p className={`mb-4 leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
@@ -327,34 +327,6 @@ const MainPage = ({ darkMode }) => {
                       {tech}
                     </span>
                   ))}
-                </div>
-                <div className="flex gap-4">
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex items-center font-medium ${
-                      darkMode 
-                        ? 'text-gray-300 hover:text-emerald-300' 
-                        : 'text-gray-600 hover:text-emerald-700'
-                    }`}
-                  >
-                    <FaGithub className="mr-2" /> Code
-                  </a>
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`flex items-center font-medium ${
-                        darkMode 
-                          ? 'text-gray-300 hover:text-emerald-300' 
-                          : 'text-gray-600 hover:text-emerald-700'
-                      }`}
-                    >
-                      <ArrowRight className="mr-2" /> Demo
-                    </a>
-                  )}
                 </div>
               </div>
             ))}
