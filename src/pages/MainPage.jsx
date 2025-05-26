@@ -9,6 +9,27 @@ import SkillBar from '../components/SkillBar';
 import ContactForm from '../components/ContactForm';
 import profileImage from '../assets/portfoliopdp.jpeg';
 
+// Import des images du projet Gestion Restaurant
+import resto1 from '../assets/GestionRestaurant/1.png';
+import resto2 from '../assets/GestionRestaurant/2.png';
+import resto3 from '../assets/GestionRestaurant/3.png';
+import resto4 from '../assets/GestionRestaurant/4.png';
+import resto5 from '../assets/GestionRestaurant/5.png';
+import resto6 from '../assets/GestionRestaurant/6.png';
+import resto7 from '../assets/GestionRestaurant/7.png';
+
+// Import des images du projet Recherche Tabou
+import tabou1 from '../assets/rechercheTabou/1.png';
+import tabou2 from '../assets/rechercheTabou/2.png';
+import tabou3 from '../assets/rechercheTabou/3.png';
+import tabou4 from '../assets/rechercheTabou/4.png';
+import tabou5 from '../assets/rechercheTabou/5.png';
+import tabou6 from '../assets/rechercheTabou/6.png';
+import tabou7 from '../assets/rechercheTabou/7.png';
+import tabou8 from '../assets/rechercheTabou/8.png';
+import tabou9 from '../assets/rechercheTabou/9.png';
+import tabou10 from '../assets/rechercheTabou/10.png';
+
 const MainPage = ({ darkMode }) => {
   const [activeSkillTab, setActiveSkillTab] = useState('development'); // 'development' ou 'network'
   const [selectedProject, setSelectedProject] = useState(null);
@@ -21,35 +42,18 @@ const MainPage = ({ darkMode }) => {
       title: 'Système de Gestion de Restaurant',
       description: 'Application web complète pour la gestion des commandes, des stocks et des employés d\'un restaurant. Interface intuitive pour les serveurs et le personnel de cuisine.',
       technologies: ['Vue.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
-      imageUrl: '/src/assets/GestionRestaurant/1.png',
-      images: [
-        '/src/assets/GestionRestaurant/1.png',
-        '/src/assets/GestionRestaurant/2.png',
-        '/src/assets/GestionRestaurant/3.png',
-        '/src/assets/GestionRestaurant/4.png',
-        '/src/assets/GestionRestaurant/5.png',
-        '/src/assets/GestionRestaurant/6.png',
-        '/src/assets/GestionRestaurant/7.png',
-      ]
+      imageUrl: resto1,
+      images: [resto1, resto2, resto3, resto4, resto5, resto6, resto7],
+      githubUrl: 'https://github.com/Itokiana03/gestionCommande'
     },
     {
       id: 2,
       title: 'Recherche Heuristique - Méthode Tabou',
       description: 'Implémentation de l\'algorithme de recherche Tabou pour résoudre des problèmes d\'optimisation combinatoire. Interface interactive avec visualisation des résultats et des paramètres de recherche.',
       technologies: ['Python', 'Streamlit', 'NumPy', 'Pandas'],
-      imageUrl: '/src/assets/rechercheTabou/1.png',
-      images: [
-        '/src/assets/rechercheTabou/1.png',
-        '/src/assets/rechercheTabou/2.png',
-        '/src/assets/rechercheTabou/3.png',
-        '/src/assets/rechercheTabou/4.png',
-        '/src/assets/rechercheTabou/5.png',
-        '/src/assets/rechercheTabou/6.png',
-        '/src/assets/rechercheTabou/7.png',
-        '/src/assets/rechercheTabou/8.png',
-        '/src/assets/rechercheTabou/9.png',
-        '/src/assets/rechercheTabou/10.png',
-      ]
+      imageUrl: tabou1,
+      images: [tabou1, tabou2, tabou3, tabou4, tabou5, tabou6, tabou7, tabou8, tabou9, tabou10],
+      githubUrl: 'https://github.com/Itokiana03/RechercheTabou'
     },
     {
       id: 3,
@@ -57,7 +61,7 @@ const MainPage = ({ darkMode }) => {
       description: 'Application mobile pour suivre les exercices, la nutrition et les objectifs fitness.',
       technologies: ['React Native', 'Firebase', 'Redux', 'Chart.js'],
       imageUrl: '/api/placeholder/600/400',
-      githubUrl: 'https://github.com/username/projet3',
+      githubUrl: 'https://github.com/Itokiana03/FitnessAppExpo',
       liveUrl: null,
     },
     {
@@ -339,41 +343,59 @@ const MainPage = ({ darkMode }) => {
             {projects.map((project) => (
               <div
                 key={project.id}
-                onClick={() => handleProjectClick(project)}
-                className={`group backdrop-blur-md rounded-xl p-6 border transition-all duration-300 cursor-pointer ${
+                className={`group backdrop-blur-md rounded-xl p-6 border transition-all duration-300 ${
                   darkMode 
                     ? 'bg-gray-900/70 border-white/10 hover:border-emerald-500/50' 
                     : 'bg-white/70 border-gray-200 hover:border-emerald-500'
                 }`}
               >
-                <div className="relative h-48 mb-6 rounded-lg overflow-hidden">
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div 
+                  onClick={() => handleProjectClick(project)}
+                  className="cursor-pointer"
+                >
+                  <div className="relative h-48 mb-6 rounded-lg overflow-hidden">
+                    <img
+                      src={project.imageUrl}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                  <h3 className={`text-xl font-bold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    {project.title}
+                  </h3>
+                  <p className={`mb-4 leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className={`px-3 py-1 text-sm rounded-full border font-medium ${
+                          darkMode 
+                            ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20' 
+                            : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                        }`}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className={`text-xl font-bold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                  {project.title}
-                </h3>
-                <p className={`mb-4 leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className={`px-3 py-1 text-sm rounded-full border font-medium ${
-                        darkMode 
-                          ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20' 
-                          : 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                      }`}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`mt-4 flex items-center font-medium ${
+                      darkMode 
+                        ? 'text-gray-300 hover:text-emerald-300' 
+                        : 'text-gray-600 hover:text-emerald-700'
+                    }`}
+                  >
+                    <FaGithub className="mr-2" /> {project.githubUrl}
+                  </a>
+                )}
               </div>
             ))}
           </div>
