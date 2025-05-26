@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, X } from 'lucide-react';
 import { FaPhone, FaEnvelope, FaLinkedin, FaGithub, FaBriefcase, FaGraduationCap, FaJs, FaPython, FaJava, FaReact, FaVuejs, FaNodeJs, FaDatabase, FaNetworkWired, FaServer, FaTools, FaCode } from 'react-icons/fa';
 import { SiTypescript, SiTailwindcss, SiExpress, SiMongodb, SiMysql, SiPostgresql, SiCisco, SiWireshark } from 'react-icons/si';
 import { TbBrandCpp } from 'react-icons/tb';
@@ -11,45 +11,64 @@ import profileImage from '../assets/portfoliopdp.jpeg';
 
 const MainPage = ({ darkMode }) => {
   const [activeSkillTab, setActiveSkillTab] = useState('development'); // 'development' ou 'network'
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Données des projets
   const projects = [
     {
       id: 1,
-      title: 'Application de Gestion de Tâches',
-      description: 'Une application complète de gestion de tâches avec authentification, drag & drop et notifications en temps réel.',
-      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io'],
-      imageUrl: '/api/placeholder/600/400',
-      githubUrl: 'https://github.com/username/projet1',
-      liveUrl: 'https://projet1.example.com',
+      title: 'Système de Gestion de Restaurant',
+      description: 'Application web complète pour la gestion des commandes, des stocks et des employés d\'un restaurant. Interface intuitive pour les serveurs et le personnel de cuisine.',
+      technologies: ['Vue.js', 'Tailwind CSS', 'Node.js', 'PostgreSQL'],
+      imageUrl: '/src/assets/GestionRestaurant/1.png',
+      images: [
+        '/src/assets/GestionRestaurant/1.png',
+        '/src/assets/GestionRestaurant/2.png',
+        '/src/assets/GestionRestaurant/3.png',
+        '/src/assets/GestionRestaurant/4.png',
+        '/src/assets/GestionRestaurant/5.png',
+        '/src/assets/GestionRestaurant/6.png',
+        '/src/assets/GestionRestaurant/7.png',
+      ]
     },
     {
-        id: 2,
-        title: 'Site E-commerce',
-        description: 'Plateforme e-commerce avec système de paiement, gestion des stocks et interface administrateur.',
-        technologies: ['React', 'Redux', 'Node.js', 'PostgreSQL', 'Stripe'],
-        imageUrl: '/api/placeholder/600/400',
-        githubUrl: 'https://github.com/username/projet2',
-        liveUrl: 'https://projet2.example.com',
-      },
-      {
-        id: 3,
-        title: 'Application Mobile de Fitness',
-        description: 'Application mobile pour suivre les exercices, la nutrition et les objectifs fitness.',
-        technologies: ['React Native', 'Firebase', 'Redux', 'Chart.js'],
-        imageUrl: '/api/placeholder/600/400',
-        githubUrl: 'https://github.com/username/projet3',
-        liveUrl: null,
-      },
-      {
-        id: 4,
-        title: 'Dashboard Analytics',
-        description: 'Dashboard interactif avec visualisation de données et rapports personnalisables.',
-        technologies: ['Vue.js', 'D3.js', 'Express', 'MySQL'],
-        imageUrl: '/api/placeholder/600/400',
-        githubUrl: 'https://github.com/username/projet4',
-        liveUrl: 'https://projet4.example.com',
-      },
+      id: 2,
+      title: 'Recherche Heuristique - Méthode Tabou',
+      description: 'Implémentation de l\'algorithme de recherche Tabou pour résoudre des problèmes d\'optimisation combinatoire. Interface interactive avec visualisation des résultats et des paramètres de recherche.',
+      technologies: ['Python', 'Streamlit', 'NumPy', 'Pandas'],
+      imageUrl: '/src/assets/rechercheTabou/1.png',
+      images: [
+        '/src/assets/rechercheTabou/1.png',
+        '/src/assets/rechercheTabou/2.png',
+        '/src/assets/rechercheTabou/3.png',
+        '/src/assets/rechercheTabou/4.png',
+        '/src/assets/rechercheTabou/5.png',
+        '/src/assets/rechercheTabou/6.png',
+        '/src/assets/rechercheTabou/7.png',
+        '/src/assets/rechercheTabou/8.png',
+        '/src/assets/rechercheTabou/9.png',
+        '/src/assets/rechercheTabou/10.png',
+      ]
+    },
+    {
+      id: 3,
+      title: 'Application Mobile de Fitness',
+      description: 'Application mobile pour suivre les exercices, la nutrition et les objectifs fitness.',
+      technologies: ['React Native', 'Firebase', 'Redux', 'Chart.js'],
+      imageUrl: '/api/placeholder/600/400',
+      githubUrl: 'https://github.com/username/projet3',
+      liveUrl: null,
+    },
+    {
+      id: 4,
+      title: 'Dashboard Analytics',
+      description: 'Dashboard interactif avec visualisation de données et rapports personnalisables.',
+      technologies: ['Vue.js', 'D3.js', 'Express', 'MySQL'],
+      imageUrl: '/api/placeholder/600/400',
+      githubUrl: 'https://github.com/username/projet4',
+      liveUrl: 'https://projet4.example.com',
+    },
   ];
 
   // Données des compétences
@@ -218,6 +237,32 @@ const MainPage = ({ darkMode }) => {
     }
   };
 
+  const handleProjectClick = (project) => {
+    setSelectedProject(project);
+    setCurrentImageIndex(0);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProject(null);
+    setCurrentImageIndex(0);
+  };
+
+  const handleNextImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) => 
+        prev === selectedProject.images.length - 1 ? 0 : prev + 1
+      );
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (selectedProject) {
+      setCurrentImageIndex((prev) => 
+        prev === 0 ? selectedProject.images.length - 1 : prev - 1
+      );
+    }
+  };
+
   return (
     <div className="flex flex-col">
       {/* Section Hero/Accueil avec effet prisme */}
@@ -294,7 +339,8 @@ const MainPage = ({ darkMode }) => {
             {projects.map((project) => (
               <div
                 key={project.id}
-                className={`group backdrop-blur-md rounded-xl p-6 border transition-all duration-300 ${
+                onClick={() => handleProjectClick(project)}
+                className={`group backdrop-blur-md rounded-xl p-6 border transition-all duration-300 cursor-pointer ${
                   darkMode 
                     ? 'bg-gray-900/70 border-white/10 hover:border-emerald-500/50' 
                     : 'bg-white/70 border-gray-200 hover:border-emerald-500'
@@ -333,6 +379,48 @@ const MainPage = ({ darkMode }) => {
           </div>
         </div>
       </section>
+
+      {/* Modal pour afficher les images du projet */}
+      {selectedProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl mx-4">
+            <button
+              onClick={handleCloseModal}
+              className="absolute -top-12 right-0 text-white hover:text-emerald-500 transition-colors"
+            >
+              <X size={32} />
+            </button>
+            
+            <div className="relative">
+              <img
+                src={selectedProject.images[currentImageIndex]}
+                alt={`${selectedProject.title} - Image ${currentImageIndex + 1}`}
+                className="w-full h-auto rounded-lg shadow-2xl"
+              />
+              
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-emerald-500/50 transition-colors"
+              >
+                <ArrowRight className="rotate-180" size={24} />
+              </button>
+              
+              <button
+                onClick={handleNextImage}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-emerald-500/50 transition-colors"
+              >
+                <ArrowRight size={24} />
+              </button>
+            </div>
+            
+            <div className="mt-4 text-center text-white">
+              <p className="text-sm">
+                Image {currentImageIndex + 1} sur {selectedProject.images.length}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Section Compétences avec effet néon */}
       <section id="skills" className="py-20 relative">
