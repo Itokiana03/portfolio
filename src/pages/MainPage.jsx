@@ -70,8 +70,8 @@ const MainPage = ({ darkMode }) => {
       description: 'Dashboard interactif avec visualisation de données et rapports personnalisables.',
       technologies: ['Vue.js', 'D3.js', 'Express', 'MySQL'],
       imageUrl: 'https://placehold.co/600x400',
-      githubUrl: 'https://github.com/username/projet4',
-      liveUrl: 'https://projet4.example.com',
+      githubUrl: 'https://github.com/Itokiana03/AnalyticDashboard',
+      liveUrl: null,
     },
   ];
 
@@ -86,7 +86,7 @@ const MainPage = ({ darkMode }) => {
         { name: 'TypeScript', level: 60, icon: <SiTypescript /> },
         { name: 'Java', level: 50, icon: <FaJava /> },
         { name: 'Python', level: 50, icon: <FaPython /> },
-        { name: 'C/C++', level: 40, icon: <TbBrandCpp /> },
+        // { name: 'C/C++', level: 40, icon: <TbBrandCpp /> },
       ],
     },
     {
@@ -125,7 +125,7 @@ const MainPage = ({ darkMode }) => {
       skills: [
         { name: 'Administration Réseau', level: 65, icon: <FaServer /> },
         { name: 'Protocoles TCP/IP', level: 50, icon: <FaNetworkWired /> },
-        { name: 'Sécurité Réseau', level: 50, icon: <FaTools /> },
+        // { name: 'Sécurité Réseau', level: 50, icon: <FaTools /> },
       ],
     },
     {
@@ -135,7 +135,7 @@ const MainPage = ({ darkMode }) => {
       skills: [
         { name: 'Wireshark', level: 40, icon: <SiWireshark /> },
         { name: 'Pare-feu & Proxy', level: 30, icon: <FaTools /> },
-        { name: 'Monitoring Réseau', level: 40, icon: <FaNetworkWired /> },
+        // { name: 'Monitoring Réseau', level: 40, icon: <FaNetworkWired /> },
       ],
     }
   ];
@@ -202,7 +202,7 @@ const MainPage = ({ darkMode }) => {
       date: "2021",
       title: "Développeur mobile (stagiaire)",
       location: "Bucky Burger",
-      description: "Développement d'applications mobile pour le suivi de décaissement des points de ventes",
+      description: "Développement d'applications mobile pour le suivi de décaissement des points de ventes. Avec React Native et Node Js",
       icon: <FaBriefcase />,
       type: 'internship'
     },
